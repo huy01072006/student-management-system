@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hệ thống Quản lý Sinh viên</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">
+        <div class="logo-circle">ICTU</div>
+
+        <div>
+            <h2>ICTU</h2>
+            <span>Student Management</span>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#" class="active" onclick="showDashboard(); return false;">
+            <span>⌂</span>
+            Tổng quan
+        </a>
+
+        <a href="#">
+            <span>♟</span>
+            Sinh viên
+        </a>
+  <a href="#" id="classMenu" onclick="showClasses(); return false;">
+    <span>▣</span>
+    Lớp học
+</a>
+
+       <a href="#" onclick="showGrades(); return false;">
+    <span>★</span>
+    Điểm số
+</a>
+    </nav>
+
+</div>
+
+
+<main>
+
+    <header>
+        <div>
+            <h1>HỆ THỐNG QUẢN LÝ SINH VIÊN</h1>
+
+            <p>
+                Trường Đại học Công nghệ Thông tin và Truyền thông
+            </p>
+        </div>
+
+        <div class="admin">
+            Quản trị viên
+        </div>
+    </header>
+
+
+    <section class="hero" id="heroSection">
+
+        <div class="hero-overlay">
+
+            <h2>
+                TRƯỜNG ĐẠI HỌC<br>
+                CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG
+            </h2>
+
+            <p>Đại học Thái Nguyên</p>
+
+        </div>
+
+    </section>
+
+
+    <section class="stats" id="statsSection">
+
+        <div class="stat-card">
+            <div class="stat-icon">🎓</div>
+
+            <div>
+                <p>Tổng sinh viên</p>
+                <h2 id="studentCount">0</h2>
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">🏫</div>
+
+            <div>
+                <p>Lớp học</p>
+                <h2>2</h2>
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+
+            <div>
+                <p>Quản lý điểm</p>
+                <h2>Điểm số</h2>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="content" id="studentsSection">
+
+        <div class="content-header">
+
+            <div>
+                <h2>Danh sách sinh viên</h2>
+                <p>Quản lý thông tin sinh viên trong hệ thống</p>
+            </div>
+
+            <button class="add-btn" onclick="openAddForm()">
+                + Thêm sinh viên
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Mã SV</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Email</th>
+                        <th>Lớp</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody id="studentTable">
+
+                    <tr>
+                        <td colspan="7" class="loading">
+                            Đang tải dữ liệu...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+<!-- DANH SÁCH LỚP HỌC -->
+<section class="content" id="classesSection" style="display:none;">
+
+    <div class="content-header">
+    <div>
+        <h2>Danh sách lớp học</h2>
+        <p>Thông tin các lớp học trong hệ thống</p>
+    </div>
+
+    <button class="add-btn" onclick="openAddClassForm()">
+        + Thêm lớp học
+    </button>
+</div>
+
+    <div class="table-container">
+        <table>
+           <thead>
+    <tr>
+        <th>ID</th>
+        <th>Mã lớp</th>
+        <th>Tên lớp</th>
+        <th>Thao tác</th>
+    </tr>
+</thead>
+
+            <tbody id="classesTable">
+                <tr>
+                    <td colspan="4" class="loading">
+                        Đang tải dữ liệu...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+<!-- DANH SÁCH ĐIỂM SINH VIÊN -->
+<section class="content" id="gradesSection" style="display:none;">
+
+    <div class="content-header">
+    <div>
+        <h2>Quản lý điểm sinh viên</h2>
+        <p>Danh sách điểm các môn học của sinh viên</p>
+    </div>
+
+    <button class="add-btn" onclick="openAddGradeForm()">
+        + Thêm điểm
+    </button>
+</div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mã sinh viên</th>
+                    <th>Họ và tên</th>
+                    <th>Môn học</th>
+                    <th>Điểm</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody id="gradesTable">
+                <tr>
+                    <td colspan="6" class="loading">
+                        Đang tải dữ liệu...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+</main>
+<!-- FORM THÊM LỚP HỌC -->
+<div class="modal" id="classModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="classModalTitle">Thêm lớp học</h2>
+            <button type="button" onclick="closeClassForm()">×</button>
+                </div>
+
+        <form id="classForm" onsubmit="saveClass(event)">
+            <input type="hidden" id="editingClassId" value="">
+            <label for="classCode">Mã lớp</label>
+            <input
+                type="text"
+                id="classCode"
+                maxlength="20"
+                placeholder="Ví dụ: CNTT-K24"
+                required
+            >
+
+            <label for="className">Tên lớp</label>
+            <input
+                type="text"
+                id="className"
+                maxlength="100"
+                placeholder="Nhập tên lớp học"
+                required
+            >
+
+            <button type="submit" class="add-btn" id="classSubmitBtn">
+    Lưu lớp học
+</button>
+        </form>
+    </div>
+</div>
+<!-- FORM THÊM / SỬA -->
+
+<div class="modal" id="studentModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Thêm sinh viên
+            </h2>
+
+            <button onclick="closeModal()" class="close">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="studentForm">
+
+            <input type="hidden" id="studentId">
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Mã sinh viên</label>
+                    <input
+                        type="text"
+                        id="studentCode"
+                        required
+                        placeholder="VD: SV004"
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        required
+                        placeholder="Nguyễn Văn A"
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Ngày sinh</label>
+                    <input
+                        type="date"
+                        id="dateOfBirth"
+                    >
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Giới tính</label>
+
+                    <select id="gender">
+                        <option value="Nam">Nam</option>
+                        <option value="Nu">Nữ</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="example@gmail.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Lớp</label>
+
+                <select id="classId">
+
+                    <option value="1">
+                        CNTT-K23
+                    </option>
+
+                    <option value="2">
+                        KHMT-K23
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeModal()"
+                >
+                    Hủy
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Lưu sinh viên
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- FORM THEM DIEM SINH VIEN -->
+<div class="modal" id="gradeModal" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="gradeModalTitle">Thêm điểm sinh viên</h2>
+            <button type="button" onclick="closeGradeForm()">×</button>
+        </div>
+
+        <form id="gradeForm" onsubmit="saveGrade(event)">
+            <div class="form-group">
+                <label for="gradeStudent">Sinh viên</label>
+                <select id="gradeStudent" required>
+                    <option value="">-- Chọn sinh viên --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="gradeSubject">Môn học</label>
+                <input
+                    type="text"
+                    id="gradeSubject"
+                    maxlength="100"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="gradeScore">Điểm</label>
+                <input
+                    type="number"
+                    id="gradeScore"
+                    min="0"
+                    max="10"
+                    step="0.01"
+                    required
+                >
+            </div>
+
+            <div class="form-actions">
+                <button type="button" onclick="closeGradeForm()">
+                    Hủy
+                </button>
+
+                <button type="submit" class="add-btn">
+                    Lưu điểm
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="app.js"></script>
+
+</body>
+</html>
